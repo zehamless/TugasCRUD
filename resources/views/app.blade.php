@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('dashboard.head')
+    @include('layout.head')
 </head>
-<body id="page-top">
-<div id="wrapper">
-    @include('dashboard.sidebar')
-    <div class="d-flex flex-column" id="content-wrapper">
-        <div id="content">
-            @include('dashboard.header')
-            @yield('content')
-        </div>
-    </div>
-</div>
-
-@include('dashboard.js')
+<body>
+@include('layout.navi')
+<header class="bg-dark py-5">
+    @include('layout.header')
+</header>
+<section class="py-5">
+    @yield('content')
+</section>
+@include('layout.js')
 </body>
 </html>

@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->get();
-        return view('products.product', compact('products'));
+        return view('home.product.product', compact('products'));
     }
 
     /**
@@ -40,9 +40,17 @@ class ProductController extends Controller
         $request->validated([
             'name' => 'required',
             'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'price' => 'required|numeric',
             'category_id' => 'required',
         ]);
+        if ($image = $request->file('image')) {
+            $destinationPath = 'images/';
+            $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $postImage);
+            $request->merge(['image' => $postImage]);
+        }
+
         Product::create($request->all());
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }

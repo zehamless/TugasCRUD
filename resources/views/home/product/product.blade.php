@@ -1,35 +1,33 @@
-@extends('layouts.app')
+@extends('app')
 @section('content')
-
-    <div class="container-fluid">
-        <div class="card shadow">
-            <div class="card-header py-3">
-                <p class="text-primary m-0 fw-bold">Data Admin</p>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="row">
-                        <div class="col-md-6 text-nowrap">
-{{--                            <a class="btn btn-outline-success" href="{{ route('admin.create') }}"> Tambah Admin</a>--}}
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach($products as $item)
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Sale badge-->
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                    <!-- Product image-->
+                    <img class="card-img-top" src="/images/{{$item->image}}" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{$item->name}}</h5>
+                            <h6 class="fw-lighter">{{$item->category->name}}</h6>
+                            <!-- Product price-->
+                            <p class="fw-bolder">{{$item->price}}</p>
+                            <hr>
+                            <p class="text-muted">{{$item->description}}</p>
                         </div>
                     </div>
-                    <div class="table-responsive table mt-2" id="dataTable" role="grid"
-                         aria-describedby="dataTable_info">
-                        <table class="table table-striped" id="dataTable">
-                            <tr>
-                                <th>Email</th>
-                                <th>Nama</th>
-                            </tr>
-                            @foreach ($users as $user)
-                                <tr>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->name }}</td>
-                                </tr>
-                            @endforeach
-                        </table>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                     </div>
                 </div>
             </div>
-        </div>
+            @endforeach
+
 @endsection
 
