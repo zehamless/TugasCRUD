@@ -79,7 +79,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('home.products.edit', compact('product'));
+        $categories = Category::all();
+        return view('home.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -97,8 +98,17 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'category_id' => 'required',
         ]);
-        $product->update($request->all());
-        return redirect()->route('home.products.index')->with('success', 'Product updated successfully.');
+        $fileName = $request->image->getClientOriginalName();
+        $image = $request->image->storeAs('images', $fileName);
+
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $image,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+        ]);
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -110,6 +120,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('home.products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('home.products.product')->with('success', 'Product deleted successfully.');
     }
 }
