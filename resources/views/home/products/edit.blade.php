@@ -1,4 +1,4 @@
-@extends('app')
+@include('app')
 @section('content')
     <div class = "container">
         <div class = "row">
@@ -8,25 +8,26 @@
                         <h3 class = "card-title">Add Product</h3>
                     </div>
                     <div class = "card-body">
-                        <form action = "{{route('product.store')}}" method = "post" enctype = "multipart/form-data">
+                        <form action = "{{route('products.update', $products->id)}}" method = "post" enctype = "multipart/form-data">
+                            @method('PUT')
                             @csrf
                             <div class = "form-group">
                                 <label for = "name">Name</label>
-                                <input type = "text" name = "name" id = "name" class = "form-control" placeholder = "Name">
+                                <input type = "text" name = "name" id = "name" class = "form-control" placeholder = "Name" value="{{$item->name}}">
                                 @error('name')
                                     <div class = "alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class = "form-group">
                                 <label for = "price">Price</label>
-                                <input type = "text" name = "price" id = "price" class = "form-control" placeholder = "Price">
+                                <input type = "text" name = "price" id = "price" class = "form-control" placeholder = "Price" value="{{$item->price}}">
                                 @error('price')
                                     <div class = "alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class = "form-group">
                                 <label for = "description">Description</label>
-                                <input type = "text" name = "description" id = "description" class = "form-control" placeholder = "Description">
+                                <input type = "text" name = "description" id = "description" class = "form-control" placeholder = "Description" value="{{$item->description}}">
                                 @error('description')
                                     <div class = "alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -34,8 +35,9 @@
                             <div class = "form-group">
                                 <label for = "category_id">Category</label>
                                 <select name = "category_id" id = "category_id" class = "form-control">
-                                    @foreach($categories as $item)
-                                        <option value = "{{$item->id}}">{{$item->name}}</option>
+                                    <option value = "">Select Category</option>
+                                    @foreach($categories as $category)
+                                        <option value = "{{$category->id}}" {{$category->id == $item->category_id ? 'selected' : ''}}>{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

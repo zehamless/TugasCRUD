@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -16,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->get();
-        return view('home.product.product', compact('products'));
+        return view('home.products.product', compact('products'));
     }
 
     /**
@@ -26,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::all();
+        return view('home.products.create', compact('categories'));
     }
 
     /**
@@ -44,14 +46,17 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'category_id' => 'required',
         ]);
-        if ($image = $request->file('image')) {
-            $destinationPath = 'images/';
-            $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $postImage);
-            $request->merge(['image' => $postImage]);
-        }
 
-        Product::create($request->all());
+        $fileName = $request->image->getClientOriginalName();
+        $image = $request->image->storeAs('images', $fileName);
+
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $image,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+        ]);
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
@@ -63,7 +68,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.product', compact('product'));
+        return view('home.products.product', compact('products'));
     }
 
     /**
@@ -74,7 +79,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        return view('home.products.edit', compact('product'));
     }
 
     /**
@@ -93,7 +98,7 @@ class ProductController extends Controller
             'category_id' => 'required',
         ]);
         $product->update($request->all());
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('home.products.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -105,6 +110,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('home.products.index')->with('success', 'Product deleted successfully.');
     }
 }
