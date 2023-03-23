@@ -20,3 +20,6 @@ Route::get('/', function () {
 });
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
+Route::get('add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('add.to.cart');
+Route::patch('update-cart', [ProductController::class, 'updateCart'])->name('update.cart');
+Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('remove.cart');

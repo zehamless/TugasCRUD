@@ -23,7 +23,12 @@
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{route('products.edit', $item->id)}}">Edit</a></div>
+                            <form class="form-horizontal" method="POST" action="{{route('products.destroy', $item->id)}}">
+                                @csrf
+                                @method('DELETE')
+                                <div class="text-center"><button type="submit" class="btn btn-outline-dark mt-auto">Delete</button></div>
+                            </form>
                         </div>
                     </div>
                 </div>

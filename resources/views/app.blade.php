@@ -11,6 +11,6 @@
 <section class="py-5">
     @yield('content')
 </section>
-@include('layout.js')
+@include('layout.footer')
 </body>
 </html>
