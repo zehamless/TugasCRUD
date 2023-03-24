@@ -21,7 +21,11 @@
                             @foreach($categories as $item)
                                 <tr>
                                     <td>{{$item->id}}</td>
-                                    <td>{{$item->name}}</td>
+                                    <td><h5>{{$item->name}}</h5>
+                                        @foreach($item->products as $product)
+                                            <p>{{$product->name}}</p>
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <a href = "{{route('categories.edit', $item->id)}}" class = "btn btn-primary">Edit</a>
                                         <form action = "{{route('categories.destroy', $item->id)}}" method = "post">
