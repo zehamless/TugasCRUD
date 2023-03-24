@@ -12,4 +12,4 @@
 
 ## Desain Database
 
-![](../../Downloads/drawSQL-tugas-crud-export-2023-03-24.png)
+![](public/drawSQL-tugas-crud-export-2023-03-24.png)
