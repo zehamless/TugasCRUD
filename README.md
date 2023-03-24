@@ -11,5 +11,6 @@
 - Database: diisi manual di "/admin"
 
 ## Desain Database
+- Cart tidak menggunakan database, hanya menggunakan session dan variable php
 
 ![](public/drawSQL-tugas-crud-export-2023-03-24.png)
