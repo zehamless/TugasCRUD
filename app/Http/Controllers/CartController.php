@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function cart()
     {
@@ -21,8 +22,8 @@ class CartController extends Controller
     /**
      * Add to cart.
      *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return Response
      */
     public function addToCart($id)
     {
@@ -46,8 +47,8 @@ class CartController extends Controller
 
     /**
      * Write code on Method
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return Response
      */
     public function updateCart(Request $request)
     {
@@ -63,8 +64,8 @@ class CartController extends Controller
     /**
      * Remove from cart.
      *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return Response
      */
     public function remove(Request $request)
     {
