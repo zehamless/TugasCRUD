@@ -17,8 +17,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('categories')->get();
+        $products = Product::with('category')->get();
         return view('home.products.product', compact('products'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adminIndex()
+    {
+        $products = Product::with('category')->get();
+        return view('home.products.admin', compact('products'));
     }
 
     /**
@@ -58,7 +69,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'category_id' => $request->category_id,
         ]);
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('admin.index')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -69,7 +80,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('home.products.product', compact('products'));
     }
 
     /**
@@ -99,8 +109,13 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'category_id' => 'required',
         ]);
-        $fileName = $request->image->getClientOriginalName();
-        $image = $request->image->storeAs('images', $fileName);
+
+        if ($request->image) {
+            $fileName = $request->image->getClientOriginalName();
+            $image = $request->image->storeAs('images', $fileName);
+        } else {
+            $image = $product->image;
+        }
 
         $product->update([
             'name' => $request->name,
@@ -109,7 +124,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'category_id' => $request->category_id,
         ]);
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('admin.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -121,77 +136,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('home.products.product')->with('success', 'Product deleted successfully.');
-    }
-
-    /**
-     * Show the cart.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function cart()
-    {
-        return view('home.products.product');
-    }
-
-    /**
-     * Add to cart.
-     *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
-     */
-    public function addToCart($id)
-    {
-        $product = Product::findorFail($id);
-        $cart = session()->get('cart',[]);
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                "id" => $product->id,
-                "name" => $product->name,
-                "quantity" => 1,
-                "price" => $product->price,
-                "image" => $product->image
-            ];
-        }
-        session()->put('cart', $cart);
-        return redirect()->route('products.index')->with('success', 'Product added to cart successfully.');
-    }
-
-
-    /**
-     * Write code on Method
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
-     */
-    public function updateCart(Request $request)
-    {
-        if($request->id && $request->quantity){
-            $cart = session()->get('cart');
-            $cart[$request->id]["quantity"] = $request->quantity;
-            session()->put('cart', $cart);
-            session()->flash('success', 'Cart updated successfully');
-        }
-        return redirect()->route('products.index')->with('success', 'Product added to cart successfully.');
-    }
-
-    /**
-     * Remove from cart.
-     *
-     * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
-     */
-    public function remove(Request $request)
-    {
-        if($request->id) {
-            $cart = session()->get('cart');
-            if(isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
-            }
-            session()->flash('success', 'Product removed successfully');
-        }
-        return redirect()->route('products.index')->with('success', 'Product added to cart successfully.');
+        return redirect()->route('admin.index')->with('success', 'Product deleted successfully.');
     }
 }
