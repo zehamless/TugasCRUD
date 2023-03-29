@@ -11286,10 +11286,6 @@ textarea.form-control-lg {
         display: none !important;
     }
 }
-img.resize {
-    width:200px;
-    height:40px;
-}
 .dropdown{
     float:right;
     padding-right: 30px;
@@ -11332,14 +11328,6 @@ img.resize {
 }
 .cart-detail .count{
     color:#C2C2DC;
-}
-.checkout{
-    border-top:1px solid #d2d2d2;
-    padding-top: 15px;
-}
-.checkout .btn-primary{
-    border-radius:50px;
-    height:50px;
 }
 .dropdown-menu:before{
     content: " ";

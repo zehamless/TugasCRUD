@@ -1,5 +1,5 @@
-<div class="container px-4 px-sm-4-5 my-5">
-    <div class="text-center text-white">
-        <h1 class="display-4 fw-bolder">Warung</h1>
+<div class="container-fluid py-3">
+    <div class="container-sm py-3">
+      <h1 class="text-center text-white display-5 fw-bold">Warung</h1>
     </div>
-</div>
+  </div>

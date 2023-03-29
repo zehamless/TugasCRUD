@@ -1,41 +1,56 @@
 @extends('app')
+
 @section('content')
-    <div class = "container">
-        <div class = "row">
-            <div class = "col-md-12">
-                <div class = "card">
-                    <div class = "card-header">
-                        <h3 class = "card-title">List of Categories</h3>
-                        <a href = "{{route('categories.create')}}" class = "btn btn-primary float-right">Add Category</a>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="card-title">List of Categories</h3>
+                        <a href="{{ route('categories.create') }}" class="btn btn-primary">Add Category</a>
                     </div>
-                    <div class = "card-body">
-                        <table class = "table">
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
                             <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Action</th>
-                            </tr>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($categories as $item)
+                                @forelse($categories as $item)
                                 <tr>
-                                    <td>{{$item->id}}</td>
-                                    <td><h5>{{$item->name}}</h5>
-                                        @foreach($item->products as $product)
-                                            <p>{{$product->name}}</p>
-                                        @endforeach
+                                    <td>{{ $item->id }}</td>
+                                    <td>
+                                        <h5>{{ $item->name }}</h5>
+                                        <div class="product-list">
+                                            @forelse($item->products as $product)
+                                            <span class="badge badge-pill badge-secondary">{{ $product->name }}</span>
+                                            @empty
+                                            <p>No products found</p>
+                                            @endforelse
+                                        </div>
                                     </td>
                                     <td>
-                                        <a href = "{{route('categories.edit', $item->id)}}" class = "btn btn-primary">Edit</a>
-                                        <form action = "{{route('categories.destroy', $item->id)}}" method = "post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type = "submit" class = "btn btn-danger">Delete</button>
-                                        </form>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <a href="{{ route('categories.edit', $item->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                            <form action="{{ route('categories.destroy', $item->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="3">No categories found.</td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -43,4 +58,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
