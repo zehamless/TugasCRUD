@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('layout.head')
+    @include('storeLayout.head')
 </head>
 <body>
-@include('layout.navi')
+@include('storeLayout.navi')
 <header class="bg-dark py-5">
-    @include('layout.header')
+    @include('storeLayout.header')
 </header>
 <section class="py-5">
     @yield('content')
 </section>
-@include('layout.footer')
+@include('storeLayout.footer')
 </body>
 </html>

@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+
 <section class="py-5">
     <div class="container px-4 px-lg-5">
 
