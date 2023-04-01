@@ -36,12 +36,16 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <a href="{{ route('categories.edit', $item->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
+                                        <div >
+                                            <a href="{{ route('categories.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                             <form action="{{ route('categories.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                @if ($item->products->count() > 0)
+                                                <span class="badge badge-pill badge-danger">Can't delete category with products</span>
+                                                @else
+                                                <button type="submit" class="btn btn-sm btn-danger ">Delete</button>
+                                                @endif
                                             </form>
                                         </div>
                                     </td>

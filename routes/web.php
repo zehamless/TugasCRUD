@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
     Route::resource('categories', CategoryController::class);
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
     Route::patch('update-cart', [CartController::class, 'updateCart'])->name('update.cart');
     Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove.cart');

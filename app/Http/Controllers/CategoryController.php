@@ -39,7 +39,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:categories',
         ]);
         Category::create($request->all());
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');

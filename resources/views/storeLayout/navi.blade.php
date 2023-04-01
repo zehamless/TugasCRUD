@@ -1,15 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="/">Home</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <a class="navbar-brand" href="{{route('products.index')}}">Home</a>
+        @if (Auth::user()->name == 'admin')
+            <a class="navbar-brand" href="{{route('admin.index')}}">Products</a>
+            <a class="navbar-brand" href="{{route('categories.index')}}">Categories</a>
+            
+        @endif
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">Cart
+                       data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle">  </i>{{Auth::user()->name}}</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        
+                        <li><a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a></li>
+                        
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-cart4"></i>
                         <span class="badge badge-pill badge-danger">
                             {{ count((array) session('cart')) }}</span></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -17,7 +31,7 @@
                             <div class="container-fluid">
                                 <div class="row total-header-section">
                                     <div class="col-lg-6 col-sm-6 col-6">
-                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i> 
+                                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
 										<span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                                         <span class="font-weight-bold">items</span>
                                     </div>
@@ -51,14 +65,14 @@
                                                     <input type="number" name="quantity"
                                                            value="{{ $details['quantity'] }}"
                                                            class="d-inline-block ml-2" style="width: 4rem;">
-                                                    <button type="submit" class="btn btn-success d-inline-block ml-2"><i class="bi bi-plus-circle-fill"></i></button>
+                                                    <button type="submit" class="btn btn-success d-inline-block ml-2"><i class="bi bi-cart-plus"></i></button>
                                                 </form>
 
                                                 <form method="POST" action="{{route('remove.cart', $details)}}"
                                                       class="d-inline-block">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger d-inline-block ml-2"><i class="bi bi-trash-fill"></i></button>
+                                                    <button type="submit" class="btn btn-danger d-inline-block ml-2"><i class="bi bi-cart-x"></i></button>
                                                 </form>
                                             </div>
                                         </div>
@@ -72,4 +86,3 @@
         </div>
     </div>
 </nav>
-`
