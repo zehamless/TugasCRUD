@@ -17,15 +17,8 @@ use App\Http\Controllers\CartController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');
     Route::get('/admin', [ProductController::class, 'adminIndex'])->name('admin.index');
     Route::resource('products', ProductController::class);
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
