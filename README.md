@@ -12,7 +12,7 @@
 1. Clone the project
 
 ```sh
-    git clone
+    git clone -b breeze --single-branch https://github.com/zehamless/TugasCRUD    
 ```
 2. Move to project folder
 3. Install composer dependencies
