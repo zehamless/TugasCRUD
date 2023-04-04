@@ -36,11 +36,15 @@
 ```sh
     php artisan migrate
 ```
-9. Run seeder for example database
+9. Link storage
+```sh
+    php artisan storage:link
+```
+10. Run seeder for example database
 ```sh
     php artisan db:seed
 ```
-10. Run project
+11. Run project
 ```sh
     php artisan serve
 ```
