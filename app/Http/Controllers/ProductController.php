@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -52,8 +53,8 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $request->validated([
-            'name' => 'required',
+        $request->validate([
+            'name' => 'required|unique:products',
             'description' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'price' => 'required|numeric',
@@ -104,7 +105,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $request->validated([
+        $request->validate([
             'name' => 'required',
             'description' => 'required',
             'price' => 'required|numeric',
@@ -112,6 +113,8 @@ class ProductController extends Controller
         ]);
 
         if ($request->image) {
+            $oldImage = $product->image;
+            Storage::delete($oldImage);
             $fileName = $request->image->getClientOriginalName();
             $image = $request->image->storeAs('images', $fileName);
         } else {
