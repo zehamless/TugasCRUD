@@ -42,9 +42,16 @@
 ```
 10. Run seeder for example database
 ```sh
-    php artisan db:seed
+    php artisan db:seed --class=ProductSeeder
 ```
 11. Run project
 ```sh
     php artisan serve
 ```
+
+## How to Use and Features
+ * Register with username = 'admin' for adminpage
+    -
+    * CRUD Product
+    * CRUD Category
+
