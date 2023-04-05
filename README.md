@@ -7,6 +7,8 @@
 
 ![](public/drawSQL-tugas-crud-export-2023-03-24.png)
 
+- Stack yang dipakai yaitu LIFO (Last In First Out)
+
 ## Installation
 
 1. Clone the project
